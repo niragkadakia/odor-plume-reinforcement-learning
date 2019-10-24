@@ -91,7 +91,6 @@ for a in range(4):
 
 # Rewards
 
-#reward[prob != 0] = 1
 for i in range(5):
 	reward[i, i, u] =  -1
 for i in range(0, 25, 5):
