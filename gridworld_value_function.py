@@ -126,5 +126,5 @@ for iC in range(num_s0):
 			A[iC, jC] += action[iC, aC]*prob[iC, jC, aC]*gamma
 	A[iC, iC] -= 1
 
-X  = np.linalg.solve(A, B)
-print (X)
+V  = np.linalg.solve(A, B)
+print (V)

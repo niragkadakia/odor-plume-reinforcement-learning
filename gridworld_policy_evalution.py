@@ -116,14 +116,14 @@ for a in range(4):
 	reward[3, 13, a] = 5.
 
 # Get value function by iterative update
-X_old = np.zeros(num_s0)	
+V_old = np.zeros(num_s0)	
 for i in range(100):
-	X_new = np.zeros(num_s0)
+	V_new = np.zeros(num_s0)
 	for iC in range(num_s0):
 		for jC in range(num_s1):
 			for aC in range(num_actions):
-				X_new[iC] += action[iC, aC]*prob[iC, jC, aC]*\
-						(reward[iC, jC, aC] + gamma*X_old[jC])
-	X_old[:] = X_new[:]
+				V_new[iC] += action[iC, aC]*prob[iC, jC, aC]*\
+						(reward[iC, jC, aC] + gamma*V_old[jC])
+	V_old[:] = V_new[:]
 	
-print (X_new)
+print (V_new)

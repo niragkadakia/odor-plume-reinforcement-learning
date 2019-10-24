@@ -117,7 +117,6 @@ for i in range(500):
 			for aC in range(num_actions):
 				V_new[iC] += action[iC, aC]*prob[iC, jC, aC]*\
 						(reward[iC, jC, aC] + gamma*V_old[jC])
-	print (max(V_old[:] - V_new[:]))
 	V_old[:] = V_new[:]
 	
 print (V_new)
