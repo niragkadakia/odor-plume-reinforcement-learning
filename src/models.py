@@ -225,11 +225,23 @@ class odor_series_RL(object):
 		Determine optimal actions using Q function.
 		"""
 		
-		##TODO: parallelize
-		#opt_actions = np.argmax(Q_terminal, axis=-1)
+		# Softmax of Q functions, with temperature T
 		boltzmann_p = (np.exp(Q_terminal.T/temp)/
-					   np.sum(np.exp(Q_terminal/temp), axis=-1)).T
-		actions = np.zeros(self.num_walkers)
+					   np.sum(np.exp(Q_terminal/temp), axis=1)).T
+		
+		# cdf of Boltzmann p, used for uniform sampling
+		boltzmann_cdf = np.cumsum(boltzmann_p[states[iS]], axis=1)[:, :-1]
+		
+		# Uniform RVs, 1 for each walker, to compare to cdf of Boltzmann p
+		rands = np.random.uniform(0, 1, (self.num_walkers, 1))
+		
+		# Test if each RV is greater than each cdf point
+		rands_exceed_cdf = rands > boltzmann_cdf
+		
+		# Then find the *last* cdf point it exceeds: this is the action bin
+		cum_rands_exceed_cdf = np.cumsum(rands_exceed_cdf, axis=1)
+		actions = np.amax(cum_rands_exceed_cdf, axis=1)
+		
 		for iW in range(self.num_walkers):
 			actions[iW] = np.random.choice(np.arange(self._num_actions), 
 											   p=boltzmann_p[states[iS, iW]])
