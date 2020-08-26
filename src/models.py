@@ -222,7 +222,8 @@ class odor_series_RL(object):
 	
 	def update_actions_softmax(self, Q_terminal, states, temp, iS):
 		"""
-		Determine optimal actions using Q function.
+		Enact optimal actions (from pre-calculated Q-function using .run())
+		with softmax probability.
 		"""
 		
 		# Softmax of Q functions, with temperature T
