@@ -457,7 +457,7 @@ class centerline_upwind_downwind_turns(odor_series_RL):
 		return xs, ys, vs
 		
 
-class upwind_downwind_turns(odor_series_RL):
+class stochastic_turning(odor_series_RL):
 	"""
 	Reinforced learning simulation where navigators can i) turn upwind with 
 	angle ~N(30, 10) degrees, ii) turn downwind with same angle
